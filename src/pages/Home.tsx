@@ -2,13 +2,15 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import Card from '../components/Card';
 import { Divider, Space, Typography } from 'antd';
 import { UserType, getUsers } from '../services/users';
+import { useNavigate } from 'react-router-dom';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [users, setUsers] = useState<UserType[]>([]);
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       try {
@@ -20,6 +22,10 @@ function Home() {
       }
     })();
   }, []);
+
+  const navigateToAboutPage = () => {
+    navigate('/about');
+  };
 
   if (error) return <div>something wrong...</div>;
   else if (loading) return <div>loading...</div>;
@@ -40,6 +46,15 @@ function Home() {
           ))}
         </Space>
       </div>
+      <div style={{ marginTop: 10 }}>
+        <Text
+          type='secondary'
+          onClick={navigateToAboutPage}
+          style={{ cursor: 'pointer' }}
+        >
+          about HOPAE
+        </Text>
+      </div>
     </div>
   );
 }
@@ -49,6 +64,7 @@ export default Home;
 const containerStyles: CSSProperties = {
   display: 'flex',
   minHeight: '100vh',
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
 };
