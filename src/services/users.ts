@@ -3,10 +3,10 @@ import { instance } from './instance';
 import { isAxiosError } from 'axios';
 
 export interface UserType {
-  id: string;
-  name: string;
-  depart: string;
-  avatar: string;
+  id: string | undefined;
+  name: string | undefined;
+  depart: string | undefined;
+  avatar: string | undefined;
 }
 
 export const getUsers = async () => {

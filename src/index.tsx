@@ -5,6 +5,8 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home';
 import About from './pages/About';
+import Reservation from './pages/Reservation';
+import { UserProvider } from './contexts/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
     path: '/about',
     element: <About />,
   },
+  {
+    path: '/reservation',
+    element: <Reservation />,
+  },
+  {
+    path: '/reservation/:uid',
+    element: <Reservation />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(
@@ -26,7 +36,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
 

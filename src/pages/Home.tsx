@@ -1,8 +1,9 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useContext, useEffect, useState } from 'react';
 import Card from '../components/Card';
 import { Divider, Space, Typography } from 'antd';
 import { UserType, getUsers } from '../services/users';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
 const { Title, Text } = Typography;
 
@@ -11,6 +12,7 @@ function Home() {
   const [error, setError] = useState<boolean>(false);
   const [users, setUsers] = useState<UserType[]>([]);
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
   useEffect(() => {
     (async () => {
       try {
@@ -27,6 +29,13 @@ function Home() {
     navigate('/about');
   };
 
+  const navigateToReservationPage = (user: UserType | undefined) => {
+    if (user) {
+      setUser(user);
+      navigate(`/reservation/${user.id}`);
+    } else navigate('/reservation');
+  };
+
   if (error) return <div>something wrong...</div>;
   else if (loading) return <div>loading...</div>;
   return (
@@ -41,7 +50,7 @@ function Home() {
               title={user.name}
               description={user.depart}
               src={user.avatar}
-              onClick={() => console.log(user.id)}
+              onClick={() => navigateToReservationPage(user)}
             />
           ))}
         </Space>
