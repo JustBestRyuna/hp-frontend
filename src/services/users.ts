@@ -20,3 +20,15 @@ export const getUsers = async () => {
     }
   }
 };
+
+export const getUser = async (id: string | undefined) => {
+  try {
+    const response: AxiosResponse = await instance.get('/users/' + id);
+    return response.data;
+  } catch (e) {
+    if (isAxiosError(e)) {
+      console.log(e.response?.data);
+      throw e;
+    }
+  }
+};
