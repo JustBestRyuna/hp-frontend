@@ -13,7 +13,7 @@ export default function Card(
       <Title level={5}>예약 ID: {props.id}</Title>
       <Title level={5}>예약 시간:
         {props.time?.map((time: string) => (
-          ` ${time}:00`
+          ` ${parseInt(time) + 8}:00`
         )).join(',')}
       </Title>
     </div>
