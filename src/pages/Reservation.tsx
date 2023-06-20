@@ -1,5 +1,5 @@
 import React, { CSSProperties, useContext, useState, useEffect } from 'react';
-import { Divider, Space, Typography } from 'antd';
+import { Space, Typography } from 'antd';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserType, getUser } from '../services/users';
@@ -44,7 +44,7 @@ function Reservation() {
         setError(true);
       }
     })();
-  }, [user]);
+  }, [user, uid]);
 
   if (error) return <div>something wrong...</div>;
   else if (loading) return <div>loading...</div>;
@@ -67,16 +67,20 @@ function Reservation() {
           avatar={loadedUser?.avatar}
         />
       </div>
-      {filteredReservations.map((reservation: ReservationType) => (
-        <div key={reservation.id} style={frameStyles}>
-          <ReservationCard
-            id={reservation.id}
-            roomId={reservation.roomId}
-            userId={reservation.userId}
-            time={reservation.time}
-          />
-        </div>
-      ))}
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        {filteredReservations.length ? filteredReservations.map((reservation: ReservationType) => (
+          <div key={reservation.id} style={frameStyles}>
+            <ReservationCard
+              id={reservation.id}
+              roomId={reservation.roomId}
+              userId={reservation.userId}
+              time={reservation.time}
+            />
+          </div>
+        )) : <div style={frameStyles}>
+          <Title level={3}>예약 내역이 없습니다.</Title>
+        </div>}
+      </div>
     </div>
   );
 }
